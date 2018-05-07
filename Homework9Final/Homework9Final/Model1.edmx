@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientContactNumber" Type="nchar" MaxLength="10" />
+          <Property Name="ClientTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="Client_Vehicle_Line">
+          <Key>
+            <PropertyRef Name="Line_ID" />
+          </Key>
+          <Property Name="Line_ID" Type="int" Nullable="false" />
+          <Property Name="Client_Vehicle_Booking" Type="datetime" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="VehicleID" Type="int" />
+        </EntityType>
+        <EntityType Name="ClientType">
+          <Key>
+            <PropertyRef Name="ClientTypeID" />
+          </Key>
+          <Property Name="ClientTypeID" Type="int" Nullable="false" />
+          <Property Name="ClientTypeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientTypeDescription" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Vehicle">
+          <Key>
+            <PropertyRef Name="VehicleID" />
+          </Key>
+          <Property Name="VehicleID" Type="int" Nullable="false" />
+          <Property Name="VehicleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="VehicleDescription" Type="nvarchar" MaxLength="50" />
+          <Property Name="VehicleTypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VehicleType">
+          <Key>
+            <PropertyRef Name="VehicleTypeID" />
+          </Key>
+          <Property Name="VehicleTypeID" Type="int" Nullable="false" />
+          <Property Name="VehicleTypeName" Type="int" />
+          <Property Name="VehicleTypeDescription" Type="int" />
+        </EntityType>
+        <Association Name="ClientID">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Client_Vehicle_Line" Type="Self.Client_Vehicle_Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Client_Vehicle_Line">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ClientType_ID">
+          <End Role="ClientType" Type="Self.ClientType" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientType">
+              <PropertyRef Name="ClientTypeID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="ClientTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VehicleID">
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="0..1" />
+          <End Role="Client_Vehicle_Line" Type="Self.Client_Vehicle_Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle">
+              <PropertyRef Name="VehicleID" />
+            </Principal>
+            <Dependent Role="Client_Vehicle_Line">
+              <PropertyRef Name="VehicleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VehicleType_ID">
+          <End Role="VehicleType" Type="Self.VehicleType" Multiplicity="1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehicleType">
+              <PropertyRef Name="VehicleTypeID" />
+            </Principal>
+            <Dependent Role="Vehicle">
+              <PropertyRef Name="VehicleTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client_Vehicle_Line" EntityType="Self.Client_Vehicle_Line" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientType" EntityType="Self.ClientType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehicle" EntityType="Self.Vehicle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VehicleType" EntityType="Self.VehicleType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="ClientID" Association="Self.ClientID">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Client_Vehicle_Line" EntitySet="Client_Vehicle_Line" />
+          </AssociationSet>
+          <AssociationSet Name="ClientType_ID" Association="Self.ClientType_ID">
+            <End Role="ClientType" EntitySet="ClientType" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="VehicleID" Association="Self.VehicleID">
+            <End Role="Vehicle" EntitySet="Vehicle" />
+            <End Role="Client_Vehicle_Line" EntitySet="Client_Vehicle_Line" />
+          </AssociationSet>
+          <AssociationSet Name="VehicleType_ID" Association="Self.VehicleType_ID">
+            <End Role="VehicleType" EntitySet="VehicleType" />
+            <End Role="Vehicle" EntitySet="Vehicle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientContactNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ClientTypeID" Type="Int32" />
+          <NavigationProperty Name="Client_Vehicle_Line" Relationship="Self.ClientID" FromRole="Client" ToRole="Client_Vehicle_Line" />
+          <NavigationProperty Name="ClientType" Relationship="Self.ClientType_ID" FromRole="Client" ToRole="ClientType" />
+        </EntityType>
+        <EntityType Name="Client_Vehicle_Line">
+          <Key>
+            <PropertyRef Name="Line_ID" />
+          </Key>
+          <Property Name="Line_ID" Type="Int32" Nullable="false" />
+          <Property Name="Client_Vehicle_Booking" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="VehicleID" Type="Int32" />
+          <NavigationProperty Name="Client" Relationship="Self.ClientID" FromRole="Client_Vehicle_Line" ToRole="Client" />
+          <NavigationProperty Name="Vehicle" Relationship="Self.VehicleID" FromRole="Client_Vehicle_Line" ToRole="Vehicle" />
+        </EntityType>
+        <EntityType Name="ClientType">
+          <Key>
+            <PropertyRef Name="ClientTypeID" />
+          </Key>
+          <Property Name="ClientTypeID" Type="Int32" Nullable="false" />
+          <Property Name="ClientTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientTypeDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Clients" Relationship="Self.ClientType_ID" FromRole="ClientType" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Vehicle">
+          <Key>
+            <PropertyRef Name="VehicleID" />
+          </Key>
+          <Property Name="VehicleID" Type="Int32" Nullable="false" />
+          <Property Name="VehicleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client_Vehicle_Line" Relationship="Self.VehicleID" FromRole="Vehicle" ToRole="Client_Vehicle_Line" />
+          <NavigationProperty Name="VehicleType" Relationship="Self.VehicleType_ID" FromRole="Vehicle" ToRole="VehicleType" />
+        </EntityType>
+        <EntityType Name="VehicleType">
+          <Key>
+            <PropertyRef Name="VehicleTypeID" />
+          </Key>
+          <Property Name="VehicleTypeID" Type="Int32" Nullable="false" />
+          <Property Name="VehicleTypeName" Type="Int32" />
+          <Property Name="VehicleTypeDescription" Type="Int32" />
+          <NavigationProperty Name="Vehicles" Relationship="Self.VehicleType_ID" FromRole="VehicleType" ToRole="Vehicle" />
+        </EntityType>
+        <Association Name="ClientID">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Client_Vehicle_Line" Type="Self.Client_Vehicle_Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Client_Vehicle_Line">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ClientType_ID">
+          <End Role="ClientType" Type="Self.ClientType" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientType">
+              <PropertyRef Name="ClientTypeID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="ClientTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VehicleID">
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="0..1" />
+          <End Role="Client_Vehicle_Line" Type="Self.Client_Vehicle_Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle">
+              <PropertyRef Name="VehicleID" />
+            </Principal>
+            <Dependent Role="Client_Vehicle_Line">
+              <PropertyRef Name="VehicleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VehicleType_ID">
+          <End Role="VehicleType" Type="Self.VehicleType" Multiplicity="1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehicleType">
+              <PropertyRef Name="VehicleTypeID" />
+            </Principal>
+            <Dependent Role="Vehicle">
+              <PropertyRef Name="VehicleTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Mini_ProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Client_Vehicle_Line" EntityType="Self.Client_Vehicle_Line" />
+          <EntitySet Name="ClientTypes" EntityType="Self.ClientType" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Vehicles" EntityType="Self.Vehicle" />
+          <EntitySet Name="VehicleTypes" EntityType="Self.VehicleType" />
+          <AssociationSet Name="ClientID" Association="Self.ClientID">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Client_Vehicle_Line" EntitySet="Client_Vehicle_Line" />
+          </AssociationSet>
+          <AssociationSet Name="ClientType_ID" Association="Self.ClientType_ID">
+            <End Role="ClientType" EntitySet="ClientTypes" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="VehicleID" Association="Self.VehicleID">
+            <End Role="Vehicle" EntitySet="Vehicles" />
+            <End Role="Client_Vehicle_Line" EntitySet="Client_Vehicle_Line" />
+          </AssociationSet>
+          <AssociationSet Name="VehicleType_ID" Association="Self.VehicleType_ID">
+            <End Role="VehicleType" EntitySet="VehicleTypes" />
+            <End Role="Vehicle" EntitySet="Vehicles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Mini_ProjectEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="Model.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientEmail" ColumnName="ClientEmail" />
+                <ScalarProperty Name="ClientContactNumber" ColumnName="ClientContactNumber" />
+                <ScalarProperty Name="ClientTypeID" ColumnName="ClientTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client_Vehicle_Line">
+            <EntityTypeMapping TypeName="Model.Client_Vehicle_Line">
+              <MappingFragment StoreEntitySet="Client_Vehicle_Line">
+                <ScalarProperty Name="Line_ID" ColumnName="Line_ID" />
+                <ScalarProperty Name="Client_Vehicle_Booking" ColumnName="Client_Vehicle_Booking" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientTypes">
+            <EntityTypeMapping TypeName="Model.ClientType">
+              <MappingFragment StoreEntitySet="ClientType">
+                <ScalarProperty Name="ClientTypeID" ColumnName="ClientTypeID" />
+                <ScalarProperty Name="ClientTypeName" ColumnName="ClientTypeName" />
+                <ScalarProperty Name="ClientTypeDescription" ColumnName="ClientTypeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehicles">
+            <EntityTypeMapping TypeName="Model.Vehicle">
+              <MappingFragment StoreEntitySet="Vehicle">
+                <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+                <ScalarProperty Name="VehicleName" ColumnName="VehicleName" />
+                <ScalarProperty Name="VehicleDescription" ColumnName="VehicleDescription" />
+                <ScalarProperty Name="VehicleTypeID" ColumnName="VehicleTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehicleTypes">
+            <EntityTypeMapping TypeName="Model.VehicleType">
+              <MappingFragment StoreEntitySet="VehicleType">
+                <ScalarProperty Name="VehicleTypeID" ColumnName="VehicleTypeID" />
+                <ScalarProperty Name="VehicleTypeName" ColumnName="VehicleTypeName" />
+                <ScalarProperty Name="VehicleTypeDescription" ColumnName="VehicleTypeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="CopyToOutputDirectory" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Default" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
