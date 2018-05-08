@@ -46,6 +46,45 @@
             <p><a href="" class="btn btn-primary btn-md">Add Client</a></p>
         </div>
     <!--Register client function-->
+            <!--CRUD-->
+        <h3> <label for="inputdefault">CRUD:</label></h3>
+        <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Row</th>
+            <th>First Name</th>
+            <th>Last Name</th>            
+            <th>CRUD</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td></td>
+            <td></td>
+            <td><button type="button" class="btn btn-primary">Create</button><button type="button" class="btn btn-primary">Read</button><button type="button" class="btn btn-primary">Update</button><button type="button" class="btn btn-primary">Delete</button></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td></td>
+            <td></td>
+            <td><button type="button" class="btn btn-primary">Create</button><button type="button" class="btn btn-primary">Read</button><button type="button" class="btn btn-primary">Update</button><button type="button" class="btn btn-primary">Delete</button></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td><button type="button" class="btn btn-primary">Create</button><button type="button" class="btn btn-primary">Read</button><button type="button" class="btn btn-primary">Update</button><button type="button" class="btn btn-primary">Delete</button></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td></td>
+            <td></td>
+            <td><button type="button" class="btn btn-primary">Create</button><button type="button" class="btn btn-primary">Read</button><button type="button" class="btn btn-primary">Update</button><button type="button" class="btn btn-primary">Delete</button></td>
+         </tr>
+         </tbody>
+    </table>
+    <!--CRUD-->
     <!--Fuzzy search bar-->
         <label for="inputdefault">Fuzzy Search:</label>
         <p><input class="form-control" id="inputdefault" type="text" placeholder="Search.."></p>
@@ -55,12 +94,16 @@
         <p><a href="" class="btn btn-primary btn-md">Order By Ascending</a></p>
         <p></p>
     <!--Order by ascending function button-->
-    </div>
 
-    <!--drop down where you add two tables-->
+    </div>
+    <!--Graph-->
+    <canvas id="myChart" style="max-width: 500px;"></canvas>
+
+    <!--Graph-->
+    <!--drop down where you add two tables???-->
 
                 <p></p>
-    <!--drop down where you add two tables-->
+    <!--drop down where you add two tables????-->
 
     </div>
 
