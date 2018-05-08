@@ -7,13 +7,6 @@
     <asp:EntityDataSource runat="server" ID="EntityDataSource1" ConnectionString="name=Mini_ProjectEntities" DefaultContainerName="Mini_ProjectEntities" EnableFlattening="False" EntitySetName="ClientTypes" EnableDelete="True" EnableInsert="True" EnableUpdate="True" EntityTypeFilter="ClientType"></asp:EntityDataSource>
     <div class="jumbotron">
         <h1>
-            <style>
-                .bg-1 { 
-       background-color: #1abc9c; /* Green */
-        color: #ffffff;
-    }
-  </style>
-            </style>
                 <div class="col-sm-2">
                 <p><img class="thumbnail img-responsive" src="https://c.ymcdn.com/sites/dermpa.site-ym.com/resource/resmgr/DiplomateIcon.jpg" /></p>
                 </div>
