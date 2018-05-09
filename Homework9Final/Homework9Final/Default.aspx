@@ -1,5 +1,9 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Homework9Final._Default" %>
 
+
+
+
+
     <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <!--Heading-->
@@ -46,7 +50,7 @@
             <p><a href="" class="btn btn-primary btn-md">Add Client</a></p>
         </div>
     <!--Register client function-->
-            <!--CRUD-->
+            <!--CRUD for Client-->
         <h3> <label for="inputdefault">CRUD:</label></h3>
         <table class="table table-hover">
     <thead>
@@ -54,6 +58,45 @@
             <th>Row</th>
             <th>First Name</th>
             <th>Last Name</th>            
+            <th>TitleID</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td></td>
+            <td></td>
+            <td><button type="button" class="btn btn-primary">Create</button><button type="button" class="btn btn-primary">Read</button><button type="button" class="btn btn-primary">Update</button><button type="button" class="btn btn-primary">Delete</button></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td></td>
+            <td></td>
+            <td><button type="button" class="btn btn-primary">Create</button><button type="button" class="btn btn-primary">Read</button><button type="button" class="btn btn-primary">Update</button><button type="button" class="btn btn-primary">Delete</button></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td><button type="button" class="btn btn-primary">Create</button><button type="button" class="btn btn-primary">Read</button><button type="button" class="btn btn-primary">Update</button><button type="button" class="btn btn-primary">Delete</button></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td></td>
+            <td></td>
+            <td><button type="button" class="btn btn-primary">Create</button><button type="button" class="btn btn-primary">Read</button><button type="button" class="btn btn-primary">Update</button><button type="button" class="btn btn-primary">Delete</button></td>
+         </tr>
+         </tbody>
+    </table>
+    <!--CRUD for Client-->
+    <!--CRUD for Vehicles-->
+                <h3> <label for="inputdefault">CRUD:</label></h3>
+        <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Vehicle Name</th>
+            <th>Vehicle Description</th>
+            <th>VehicleID</th>            
             <th>CRUD</th>
         </tr>
     </thead>
@@ -84,7 +127,7 @@
          </tr>
          </tbody>
     </table>
-    <!--CRUD-->
+    <!--CRUD for Vehicles-->
     <!--Fuzzy search bar-->
         <label for="inputdefault">Fuzzy Search:</label>
         <p><input class="form-control" id="inputdefault" type="text" placeholder="Search.."></p>
