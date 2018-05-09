@@ -4,12 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Client">
           <Key>
             <PropertyRef Name="ClientID" />
           </Key>
-          <Property Name="ClientID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClientName" Type="nvarchar" MaxLength="50" />
           <Property Name="ClientEmail" Type="nvarchar" MaxLength="50" />
           <Property Name="ClientContactNumber" Type="nchar" MaxLength="10" />
@@ -19,7 +19,7 @@
           <Key>
             <PropertyRef Name="Line_ID" />
           </Key>
-          <Property Name="Line_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Line_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Client_Vehicle_Booking" Type="datetime" Nullable="false" />
           <Property Name="ClientID" Type="int" />
           <Property Name="VehicleID" Type="int" />
@@ -28,7 +28,7 @@
           <Key>
             <PropertyRef Name="ClientTypeID" />
           </Key>
-          <Property Name="ClientTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ClientTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClientTypeName" Type="nvarchar" MaxLength="50" />
           <Property Name="ClientTypeDescription" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -46,7 +46,7 @@
           <Key>
             <PropertyRef Name="VehicleID" />
           </Key>
-          <Property Name="VehicleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="VehicleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="VehicleName" Type="nvarchar" MaxLength="50" />
           <Property Name="VehicleDescription" Type="nvarchar" MaxLength="50" />
           <Property Name="VehicleTypeID" Type="int" Nullable="false" />
@@ -55,9 +55,9 @@
           <Key>
             <PropertyRef Name="VehicleTypeID" />
           </Key>
-          <Property Name="VehicleTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="VehicleTypeName" Type="int" />
-          <Property Name="VehicleTypeDescription" Type="int" />
+          <Property Name="VehicleTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VehicleTypeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="VehicleTypeDescription" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <Association Name="ClientID">
           <End Role="Client" Type="Self.Client" Multiplicity="0..1">
@@ -133,8 +133,7 @@
             <End Role="Vehicle" EntitySet="Vehicle" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -196,8 +195,8 @@
             <PropertyRef Name="VehicleTypeID" />
           </Key>
           <Property Name="VehicleTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VehicleTypeName" Type="Int32" />
-          <Property Name="VehicleTypeDescription" Type="Int32" />
+          <Property Name="VehicleTypeName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="VehicleTypeDescription" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Vehicles" Relationship="Self.VehicleType_ID" FromRole="VehicleType" ToRole="Vehicle" />
         </EntityType>
         <Association Name="ClientID">

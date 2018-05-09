@@ -1193,7 +1193,7 @@ namespace Homework9Final
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> VehicleTypeName
+        public global::System.String VehicleTypeName
         {
             get
             {
@@ -1203,13 +1203,13 @@ namespace Homework9Final
             {
                 OnVehicleTypeNameChanging(value);
                 ReportPropertyChanging("VehicleTypeName");
-                _VehicleTypeName = StructuralObject.SetValidValue(value, "VehicleTypeName");
+                _VehicleTypeName = StructuralObject.SetValidValue(value, true, "VehicleTypeName");
                 ReportPropertyChanged("VehicleTypeName");
                 OnVehicleTypeNameChanged();
             }
         }
-        private Nullable<global::System.Int32> _VehicleTypeName;
-        partial void OnVehicleTypeNameChanging(Nullable<global::System.Int32> value);
+        private global::System.String _VehicleTypeName;
+        partial void OnVehicleTypeNameChanging(global::System.String value);
         partial void OnVehicleTypeNameChanged();
     
         /// <summary>
@@ -1217,7 +1217,7 @@ namespace Homework9Final
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> VehicleTypeDescription
+        public global::System.String VehicleTypeDescription
         {
             get
             {
@@ -1227,13 +1227,13 @@ namespace Homework9Final
             {
                 OnVehicleTypeDescriptionChanging(value);
                 ReportPropertyChanging("VehicleTypeDescription");
-                _VehicleTypeDescription = StructuralObject.SetValidValue(value, "VehicleTypeDescription");
+                _VehicleTypeDescription = StructuralObject.SetValidValue(value, true, "VehicleTypeDescription");
                 ReportPropertyChanged("VehicleTypeDescription");
                 OnVehicleTypeDescriptionChanged();
             }
         }
-        private Nullable<global::System.Int32> _VehicleTypeDescription;
-        partial void OnVehicleTypeDescriptionChanging(Nullable<global::System.Int32> value);
+        private global::System.String _VehicleTypeDescription;
+        partial void OnVehicleTypeDescriptionChanging(global::System.String value);
         partial void OnVehicleTypeDescriptionChanged();
 
         #endregion

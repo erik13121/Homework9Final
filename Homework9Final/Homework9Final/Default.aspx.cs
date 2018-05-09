@@ -17,6 +17,8 @@ namespace Homework9Final
         {
             FillClientsTable();
             FillClientTypesTable();
+            FillVehiclesTable();
+            FillVehicleTypesTable();
         }
 
         protected void btnAddClientType_Click(object sender, EventArgs e)
@@ -46,7 +48,7 @@ namespace Homework9Final
                 }
                 else
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Customer already exists. Please ensure details are correct.');</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Client Type already exists. Please ensure details are correct.');</script>");
                 }
             }
             else
@@ -87,7 +89,7 @@ namespace Homework9Final
                 }
                 else
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Customer already exists. Please ensure details are correct.');</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Client already exists. Please ensure details are correct.');</script>");
                 }
             }
             else
@@ -183,7 +185,7 @@ namespace Homework9Final
             }
             else
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Please select a client first.');</script>");
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Please select a Client Type first.');</script>");
             }
         }
 
@@ -210,7 +212,7 @@ namespace Homework9Final
             }
             else
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Please select a client first.');</script>");
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Please select a Client Type first.');</script>");
             }
         }
 
@@ -222,6 +224,205 @@ namespace Homework9Final
             inputClientID.Text = selectedClientType.ClientTypeID.ToString();
             inputName.Text = selectedClientType.ClientTypeName;
             inputEmail.Text = selectedClientType.ClientTypeDescription;
+        }
+
+        protected void btnAddVehicleType_Click(object sender, EventArgs e)
+        {
+            if (inputVehicleTypeName.Text != "" && inputVehicleTypeDescription.Text != "")
+            {
+                if (MyController.VehicleTypes.Any(VehicleType =>
+                    VehicleType.VehicleTypeName == inputVehicleTypeName.Text &&
+                    VehicleType.VehicleTypeDescription == inputVehicleTypeDescription.Text) == false)
+                {
+                    VehicleType tempType = new VehicleType();
+                    tempType.VehicleTypeName = inputVehicleTypeName.Text;
+                    tempType.VehicleTypeDescription = inputVehicleTypeDescription.Text;
+
+                    MyController.VehicleTypes.AddObject(tempType);
+                    MyController.SaveChanges();
+
+                    var tempVehicleTypes = MyController.VehicleTypes.OrderByDescending(VehicleType => VehicleType.VehicleTypeID);
+                    var newVehicleTypeID = tempVehicleTypes.First().VehicleTypeID.ToString();
+                    dbxVehicleTypeID.Items.Add(newVehicleTypeID);
+
+                    FillVehicleTypesTable();
+
+                    inputVehicleTypeID.Text = "";
+                    inputVehicleTypeName.Text = "";
+                    inputVehicleTypeDescription.Text = "";
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Vehicle Type already exists. Please ensure details are correct.');</script>");
+                }
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Please ensure all details are entered.');</script>");
+            }
+        }
+
+        protected void btnUpdateVehicleType_Click(object sender, EventArgs e)
+        {
+            if (inputVehicleTypeName.Text != "" && inputVehicleTypeDescription.Text != "")
+            {
+                var selectedVehicleTypeID = int.Parse(inputVehicleTypeID.Text);
+                var selectedVehicleType = MyController.VehicleTypes.Single(VehicleType => VehicleType.VehicleTypeID == selectedVehicleTypeID);
+
+                selectedVehicleType.VehicleTypeName = inputVehicleTypeName.Text;
+                selectedVehicleType.VehicleTypeDescription = inputVehicleTypeDescription.Text;
+
+                MyController.SaveChanges();
+                FillVehicleTypesTable();
+
+                inputVehicleTypeID.Text = "";
+                inputVehicleTypeName.Text = "";
+                inputVehicleTypeDescription.Text = "";
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Please select a Vehicle Type first.');</script>");
+            }
+        }
+
+        protected void btnDeleteVehicleType_Click(object sender, EventArgs e)
+        {
+            if (inputVehicleTypeName.Text != "" && inputClientTypeDescription.Text != "")
+            {
+                var selectedVehicleTypeID = int.Parse(inputVehicleTypeID.Text);
+                var selectedVehicleType = MyController.VehicleTypes.Single(VehicleType => VehicleType.VehicleTypeID == selectedVehicleTypeID);
+
+                MyController.DeleteObject(selectedVehicleType);
+
+                MyController.VehicleTypes.Context.ExecuteStoreCommand("DBCC CHECKIDENT('ClientType', RESEED, " + (selectedVehicleTypeID - 1) + ")");
+
+                MyController.SaveChanges();
+
+                dbxVehicleTypeID.Items.Clear();
+                foreach (var item in MyController.VehicleTypes)
+                {
+                    dbxVehicleTypeID.Items.Add(item.VehicleTypeID.ToString());
+                }
+
+                FillVehicleTypesTable();
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Please select a Vehicle Type first.');</script>");
+            }
+        }
+
+        protected void btnSelectVehicleType_Click(object sender, EventArgs e)
+        {
+            var selectedVehicleTypeID = int.Parse(dbxVehicleTypeID.SelectedValue);
+            var selectedVehicleType = MyController.VehicleTypes.Single(VehicleType => VehicleType.VehicleTypeID == selectedVehicleTypeID);
+
+            inputVehicleID.Text = selectedVehicleType.VehicleTypeID.ToString();
+            inputVehicleName.Text = selectedVehicleType.VehicleTypeName;
+            inputVehicleDescription.Text = selectedVehicleType.VehicleTypeDescription;
+        }
+
+        protected void btnAddVehicle_Click(object sender, EventArgs e)
+        {
+            if (inputVehicleName.Text != "" && inputVehicleDescription.Text != "")
+            {
+                if (MyController.Vehicles.Any(Vehicle =>
+                    Vehicle.VehicleName == inputVehicleName.Text &&
+                    Vehicle.VehicleDescription == inputVehicleDescription.Text) == false)
+                {
+                    Vehicle tempVehicle = new Vehicle();
+                    tempVehicle.VehicleName = inputVehicleName.Text;
+                    tempVehicle.VehicleDescription = inputVehicleDescription.Text;
+                    tempVehicle.VehicleTypeID = MyController.VehicleTypes.Single(VehicleType => VehicleType.VehicleTypeName == dbxVehicleTypeName.SelectedValue).VehicleTypeID;
+
+                    MyController.Vehicles.AddObject(tempVehicle);
+                    MyController.SaveChanges();
+
+                    var tempVehicles = MyController.Vehicles.OrderByDescending(Vehicle => Vehicle.VehicleID);
+                    var newVehicleID = tempVehicles.First().VehicleID.ToString();
+                    dbxVehicleID.Items.Add(newVehicleID);
+
+                    FillVehiclesTable();
+
+                    inputVehicleID.Text = "";
+                    inputVehicleName.Text = "";
+                    inputVehicleDescription.Text = "";
+                    dbxVehicleTypeName.SelectedIndex = 0;
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Vehicle already exists. Please ensure details are correct.');</script>");
+                }
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Please ensure all details are entered.');</script>");
+            }
+        }
+
+        protected void btnUpdateVehicle_Click(object sender, EventArgs e)
+        {
+            if (inputVehicleName.Text != "" && inputVehicleDescription.Text != "")
+            {
+                var selectedVehicleID = int.Parse(inputVehicleID.Text);
+                var selectedVehicle = MyController.Vehicles.Single(Vehicle => Vehicle.VehicleID == selectedVehicleID);
+
+                selectedVehicle.VehicleName = inputVehicleName.Text;
+                selectedVehicle.VehicleDescription = inputVehicleDescription.Text;
+                selectedVehicle.VehicleTypeID = MyController.VehicleTypes.Single(VehicleType => VehicleType.VehicleTypeName == dbxVehicleTypeName.Text).VehicleTypeID;
+
+                MyController.SaveChanges();
+                FillVehiclesTable();
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Please select a Vehicle first.');</script>");
+            }
+        }
+
+        protected void btnDeleteVehicle_Click(object sender, EventArgs e)
+        {
+            if (inputVehicleName.Text != "" && inputVehicleDescription.Text != "")
+            {
+                var selectedVehicleID = int.Parse(inputVehicleID.Text);
+                var selectedVehicle = MyController.Vehicles.Single(Vehicle => Vehicle.VehicleID == selectedVehicleID);
+
+                MyController.Vehicles.DeleteObject(selectedVehicle);
+
+                MyController.Vehicles.Context.ExecuteStoreCommand("DBCC CHECKIDENT('Client', RESEED, " + (selectedVehicleID - 1) + ")");
+
+                MyController.SaveChanges();
+
+                dbxVehicleID.Items.Clear();
+                foreach (var item in MyController.Vehicles)
+                {
+                    dbxVehicleID.Items.Add(item.VehicleID.ToString());
+                }
+
+                FillVehiclesTable();
+
+                inputVehicleID.Text = "";
+                inputVehicleName.Text = "";
+                inputVehicleDescription.Text = "";
+                dbxVehicleTypeName.SelectedIndex = 0;
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Please select a Vehicle first.');</script>");
+            }
+        }
+
+        protected void btnSelectVehicle_Click(object sender, EventArgs e)
+        {
+            var selectedVehicleID = int.Parse(dbxVehicleID.SelectedValue);
+            var selectedVehicle = MyController.Vehicles.Single(Vehicle => Vehicle.VehicleID == selectedVehicleID);
+
+            inputVehicleID.Text = selectedVehicle.VehicleID.ToString();
+            inputVehicleName.Text = selectedVehicle.VehicleName;
+            inputVehicleDescription.Text = selectedVehicle.VehicleDescription;
+
+            var selectedVehicleType = MyController.VehicleTypes.Single(VehicleType => VehicleType.VehicleTypeID == selectedVehicle.VehicleTypeID);
+            dbxVehicleTypeName.SelectedValue = selectedVehicleType.VehicleTypeName;
         }
 
         public void FillClientsTable()
@@ -257,6 +458,60 @@ namespace Homework9Final
 
             dgvClientTypes.DataSource = tempTypes;
             dgvClientTypes.DataBind();
+        }
+
+        public void FillVehiclesTable()
+        {
+            List<Vehicle> temp = new List<Vehicle>();
+
+            foreach (var item in MyController.Vehicles)
+            {
+                if (!IsPostBack)
+                {
+                    dbxVehicleID.Items.Add(item.VehicleID.ToString());
+                }
+                temp.Add(item);
+            }
+
+            dgvVehicles.DataSource = temp;
+            dgvVehicles.DataBind();
+        }
+
+        public void FillVehicleTypesTable()
+        {
+            List<VehicleType> tempTypes = new List<VehicleType>();
+
+            foreach (var item in MyController.VehicleTypes)
+            {
+                if (!IsPostBack)
+                {
+                    dbxVehicleTypeName.Items.Add(item.VehicleTypeName);
+                    dbxVehicleTypeID.Items.Add(item.VehicleTypeID.ToString());
+                }
+                tempTypes.Add(item);
+            }
+
+            dgvVehicleTypes.DataSource = tempTypes;
+            dgvVehicleTypes.DataBind();
+        }
+
+        protected void btnClientFuzzySearch_Click(object sender, EventArgs e)
+        {
+            var fuzzyResult = MyController.Clients.Where(Client => Client.ClientName.Contains(inputClientFuzzySearch.Text) ||
+            Client.ClientEmail.Contains(inputClientFuzzySearch.Text) ||
+            Client.ClientContactNumber.Contains(inputClientFuzzySearch.Text)).OrderBy(Client => Client.ClientName);
+
+            dgvClients.DataSource = fuzzyResult;
+            dgvClients.DataBind();
+        }
+
+        protected void btnVehicleFuzzySearch_Click(object sender, EventArgs e)
+        {
+            var fuzzyResult = MyController.Vehicles.Where(Vehicle => Vehicle.VehicleName.Contains(inputVehicleFuzzySearch.Text) ||
+            Vehicle.VehicleDescription.Contains(inputVehicleFuzzySearch.Text)).OrderBy(Vehicle => Vehicle.VehicleName);
+
+            dgvVehicles.DataSource = fuzzyResult;
+            dgvVehicles.DataBind();
         }
     }
 }
