@@ -14,7 +14,7 @@
 
     <div class="row">
         <!--Register Client-->
-        <div class="col-sm-3 col-md-4 col-lg-6 form-group">
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-6 form-group">
             <h1><span class="label label-default">Register Client</span></h1>
             <label for="inputClientID">ClientID:</label><br />
             <asp:TextBox CssClass="input-lg" ID="inputClientID" runat="server" Enabled="false"></asp:TextBox>
@@ -49,7 +49,7 @@
         </div>
 
         <!--Select Client-->
-        <div class="col-sm-3 col-md-4 col-lg-6 form-group">
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-6 form-group">
             <h1><span class="label label-default">Select Client</span></h1>
             <label for="dbxClientID">ClientID:</label><br />
             <asp:DropDownList CssClass="input-lg" ID="dbxClientID" runat="server"></asp:DropDownList>
@@ -60,7 +60,7 @@
     <div class="row">
         <!--Cruds-->
         <!--Client Type Crud-->
-        <div class="col-sm-3 col-md-4 col-lg-6 form-group">
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-6 form-group">
             <h1><span class="label label-default">Client Type</span></h1>
             <label for="inputClientTypeID">Client Type ID:</label><br />
             <asp:TextBox CssClass="input-lg" ID="inputClientTypeID" runat="server" Enabled="false"></asp:TextBox>
@@ -86,7 +86,7 @@
         </div>
 
         <!--Select Client Type-->
-        <div class="col-sm-3 col-md-4 col-lg-6 form-group">
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-6 form-group">
             <h1><span class="label label-default">Select Client Type</span></h1>
             <label for="dbxClientTypeID">Client Type ID:</label><br />
             <asp:DropDownList CssClass="input-lg" ID="dbxClientTypeID" runat="server"></asp:DropDownList>
@@ -96,7 +96,7 @@
 
     <div class="row">
         <!--Register Vehicle-->
-        <div class="col-sm-3 col-md-4 col-lg-6 form-group">
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-6 form-group">
             <h1><span class="label label-default">Register Vehicle</span></h1>
             <label for="inputVehicleID">Vehicle ID:</label><br />
             <asp:TextBox CssClass="input-lg" ID="inputVehicleID" runat="server" Enabled="false"></asp:TextBox>
@@ -128,7 +128,7 @@
         </div>
 
         <!--Select Vehicle-->
-        <div class="col-sm-3 col-md-4 col-lg-6 form-group">
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-6 form-group">
             <h1><span class="label label-default">Select Vehicle</span></h1>
             <label for="dbxVehicleID">Vehicle ID:</label><br />
             <asp:DropDownList CssClass="input-lg" ID="dbxVehicleID" runat="server"></asp:DropDownList>
@@ -139,7 +139,7 @@
     <div class="row">
         <!--Cruds-->
         <!--Vehicle Type Crud-->
-        <div class="col-sm-3 col-md-4 col-lg-6 form-group">
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-6 form-group">
             <h1><span class="label label-default">Vehicle Type</span></h1>
             <label for="inputVehicleTypeID">Vehicle Type ID:</label><br />
             <asp:TextBox CssClass="input-lg" ID="inputVehicleTypeID" runat="server" Enabled="false"></asp:TextBox>
@@ -165,7 +165,7 @@
         </div>
 
         <!--Select Vehicle Type-->
-        <div class="col-sm-3 col-md-4 col-lg-6 form-group">
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-6 form-group">
             <h1><span class="label label-default">Select Vehicle Type</span></h1>
             <label for="dbxVehicleTypeID">Vehicle Type ID:</label><br />
             <asp:DropDownList CssClass="input-lg" ID="dbxVehicleTypeID" runat="server"></asp:DropDownList>

@@ -40,7 +40,7 @@ namespace Homework9Final
                     var newClientTypeID = tempClientTypes.First().ClientTypeID.ToString();
                     dbxClientTypeID.Items.Add(newClientTypeID);
 
-                    FillClientsTable();
+                    FillClientTypesTable();
 
                     inputClientTypeID.Text = "";
                     inputClientTypeName.Text = "";
@@ -61,35 +61,42 @@ namespace Homework9Final
         {
             if (inputName.Text != "" && inputEmail.Text != "" && inputContactNumber.Text != "")
             {
-                if (MyController.Clients.Any(Client => 
-                    Client.ClientName == inputName.Text &&
-                    Client.ClientEmail == inputEmail.Text &&
-                    Client.ClientContactNumber == inputContactNumber.Text) == false)
+                if (dbxClientTypeName.Items.Count == 0)
                 {
-                    Client tempClient = new Client();
-                    tempClient.ClientName = inputName.Text;
-                    tempClient.ClientEmail = inputEmail.Text;
-                    tempClient.ClientContactNumber = inputContactNumber.Text;
-                    tempClient.ClientTypeID = MyController.ClientTypes.Single(ClientType => ClientType.ClientTypeName == dbxClientTypeName.SelectedValue).ClientTypeID;
-
-                    MyController.Clients.AddObject(tempClient);
-                    MyController.SaveChanges();
-
-                    var tempClients = MyController.Clients.OrderByDescending(Client => Client.ClientID);
-                    var newClientID = tempClients.First().ClientID.ToString();
-                    dbxClientID.Items.Add(newClientID);
-
-                    FillClientsTable();
-
-                    inputClientID.Text = "";
-                    inputName.Text = "";
-                    inputEmail.Text = "";
-                    inputContactNumber.Text = "";
-                    dbxClientTypeName.SelectedIndex = 0;
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Client already exists. Please ensure details are correct.');</script>");
                 }
                 else
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Client already exists. Please ensure details are correct.');</script>");
+                    if (MyController.Clients.Any(Client =>
+                    Client.ClientName == inputName.Text &&
+                    Client.ClientEmail == inputEmail.Text &&
+                    Client.ClientContactNumber == inputContactNumber.Text) == false)
+                    {
+                        Client tempClient = new Client();
+                        tempClient.ClientName = inputName.Text;
+                        tempClient.ClientEmail = inputEmail.Text;
+                        tempClient.ClientContactNumber = inputContactNumber.Text;
+                        tempClient.ClientTypeID = MyController.ClientTypes.Single(ClientType => ClientType.ClientTypeName == dbxClientTypeName.SelectedValue).ClientTypeID;
+
+                        MyController.Clients.AddObject(tempClient);
+                        MyController.SaveChanges();
+
+                        var tempClients = MyController.Clients.OrderByDescending(Client => Client.ClientID);
+                        var newClientID = tempClients.First().ClientID.ToString();
+                        dbxClientID.Items.Add(newClientID);
+
+                        FillClientsTable();
+
+                        inputClientID.Text = "";
+                        inputName.Text = "";
+                        inputEmail.Text = "";
+                        inputContactNumber.Text = "";
+                        dbxClientTypeName.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Client already exists. Please ensure details are correct.');</script>");
+                    }
                 }
             }
             else
@@ -142,7 +149,7 @@ namespace Homework9Final
 
                 MyController.Clients.DeleteObject(selectedClient);
 
-                MyController.Clients.Context.ExecuteStoreCommand("DBCC CHECKIDENT('Client', RESEED, " + (selectedClientID - 1) + ")");
+                MyController.Clients.Context.ExecuteStoreCommand("DBCC CHECKIDENT('Clients', RESEED, " + (selectedClientID - 1) + ")");
 
                 MyController.SaveChanges();
 
@@ -198,7 +205,7 @@ namespace Homework9Final
 
                 MyController.DeleteObject(selectedClientType);
 
-                MyController.ClientTypes.Context.ExecuteStoreCommand("DBCC CHECKIDENT('ClientType', RESEED, " + (selectedClientTypeID - 1) + ")");
+                MyController.ClientTypes.Context.ExecuteStoreCommand("DBCC CHECKIDENT('ClientTypes', RESEED, " + (selectedClientTypeID - 1) + ")");
 
                 MyController.SaveChanges();
 
@@ -221,9 +228,9 @@ namespace Homework9Final
             var selectedClientTypeID = int.Parse(dbxClientTypeID.SelectedValue);
             var selectedClientType = MyController.ClientTypes.Single(ClientType => ClientType.ClientTypeID == selectedClientTypeID);
 
-            inputClientID.Text = selectedClientType.ClientTypeID.ToString();
-            inputName.Text = selectedClientType.ClientTypeName;
-            inputEmail.Text = selectedClientType.ClientTypeDescription;
+            inputClientTypeID.Text = selectedClientType.ClientTypeID.ToString();
+            inputClientTypeName.Text = selectedClientType.ClientTypeName;
+            inputClientTypeDescription.Text = selectedClientType.ClientTypeDescription;
         }
 
         protected void btnAddVehicleType_Click(object sender, EventArgs e)
@@ -244,9 +251,10 @@ namespace Homework9Final
                     var tempVehicleTypes = MyController.VehicleTypes.OrderByDescending(VehicleType => VehicleType.VehicleTypeID);
                     var newVehicleTypeID = tempVehicleTypes.First().VehicleTypeID.ToString();
                     dbxVehicleTypeID.Items.Add(newVehicleTypeID);
+                    dbxVehicleTypeName.Items.Add(tempType.VehicleTypeName);
 
                     FillVehicleTypesTable();
-
+                    
                     inputVehicleTypeID.Text = "";
                     inputVehicleTypeName.Text = "";
                     inputVehicleTypeDescription.Text = "";
@@ -294,7 +302,7 @@ namespace Homework9Final
 
                 MyController.DeleteObject(selectedVehicleType);
 
-                MyController.VehicleTypes.Context.ExecuteStoreCommand("DBCC CHECKIDENT('ClientType', RESEED, " + (selectedVehicleTypeID - 1) + ")");
+                MyController.VehicleTypes.Context.ExecuteStoreCommand("DBCC CHECKIDENT('ClientTypes', RESEED, " + (selectedVehicleTypeID - 1) + ")");
 
                 MyController.SaveChanges();
 
@@ -317,9 +325,9 @@ namespace Homework9Final
             var selectedVehicleTypeID = int.Parse(dbxVehicleTypeID.SelectedValue);
             var selectedVehicleType = MyController.VehicleTypes.Single(VehicleType => VehicleType.VehicleTypeID == selectedVehicleTypeID);
 
-            inputVehicleID.Text = selectedVehicleType.VehicleTypeID.ToString();
-            inputVehicleName.Text = selectedVehicleType.VehicleTypeName;
-            inputVehicleDescription.Text = selectedVehicleType.VehicleTypeDescription;
+            inputVehicleTypeID.Text = selectedVehicleType.VehicleTypeID.ToString();
+            inputVehicleTypeName.Text = selectedVehicleType.VehicleTypeName;
+            inputVehicleTypeDescription.Text = selectedVehicleType.VehicleTypeDescription;
         }
 
         protected void btnAddVehicle_Click(object sender, EventArgs e)
@@ -389,7 +397,7 @@ namespace Homework9Final
 
                 MyController.Vehicles.DeleteObject(selectedVehicle);
 
-                MyController.Vehicles.Context.ExecuteStoreCommand("DBCC CHECKIDENT('Client', RESEED, " + (selectedVehicleID - 1) + ")");
+                MyController.Vehicles.Context.ExecuteStoreCommand("DBCC CHECKIDENT('Vehicles', RESEED, " + (selectedVehicleID - 1) + ")");
 
                 MyController.SaveChanges();
 
@@ -423,6 +431,25 @@ namespace Homework9Final
 
             var selectedVehicleType = MyController.VehicleTypes.Single(VehicleType => VehicleType.VehicleTypeID == selectedVehicle.VehicleTypeID);
             dbxVehicleTypeName.SelectedValue = selectedVehicleType.VehicleTypeName;
+        }
+
+        protected void btnClientFuzzySearch_Click(object sender, EventArgs e)
+        {
+            var fuzzyResult = MyController.Clients.Where(Client => Client.ClientName.Contains(inputClientFuzzySearch.Text) ||
+            Client.ClientEmail.Contains(inputClientFuzzySearch.Text) ||
+            Client.ClientContactNumber.Contains(inputClientFuzzySearch.Text)).OrderBy(Client => Client.ClientName);
+
+            dgvClients.DataSource = fuzzyResult;
+            dgvClients.DataBind();
+        }
+
+        protected void btnVehicleFuzzySearch_Click(object sender, EventArgs e)
+        {
+            var fuzzyResult = MyController.Vehicles.Where(Vehicle => Vehicle.VehicleName.Contains(inputVehicleFuzzySearch.Text) ||
+            Vehicle.VehicleDescription.Contains(inputVehicleFuzzySearch.Text)).OrderBy(Vehicle => Vehicle.VehicleName);
+
+            dgvVehicles.DataSource = fuzzyResult;
+            dgvVehicles.DataBind();
         }
 
         public void FillClientsTable()
@@ -493,25 +520,6 @@ namespace Homework9Final
 
             dgvVehicleTypes.DataSource = tempTypes;
             dgvVehicleTypes.DataBind();
-        }
-
-        protected void btnClientFuzzySearch_Click(object sender, EventArgs e)
-        {
-            var fuzzyResult = MyController.Clients.Where(Client => Client.ClientName.Contains(inputClientFuzzySearch.Text) ||
-            Client.ClientEmail.Contains(inputClientFuzzySearch.Text) ||
-            Client.ClientContactNumber.Contains(inputClientFuzzySearch.Text)).OrderBy(Client => Client.ClientName);
-
-            dgvClients.DataSource = fuzzyResult;
-            dgvClients.DataBind();
-        }
-
-        protected void btnVehicleFuzzySearch_Click(object sender, EventArgs e)
-        {
-            var fuzzyResult = MyController.Vehicles.Where(Vehicle => Vehicle.VehicleName.Contains(inputVehicleFuzzySearch.Text) ||
-            Vehicle.VehicleDescription.Contains(inputVehicleFuzzySearch.Text)).OrderBy(Vehicle => Vehicle.VehicleName);
-
-            dgvVehicles.DataSource = fuzzyResult;
-            dgvVehicles.DataBind();
         }
     }
 }

@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <!--Clients table-->
     <div class="row">
-        <div class="col-sm-3 col-md-4 col-lg-6 form-group">
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-6 form-group">
             <br />
             <asp:GridView ID="dgvClients" runat="server" Width="600px"></asp:GridView>
             <br />
@@ -18,7 +18,7 @@
 
     <!--Vehicles table-->
     <div class="row">
-        <div class="col-sm-3 col-md-4 col-lg-6 form-group">
+        <div class="col-xs-2 col-sm-3 col-md-4 col-lg-6 form-group">
             <asp:GridView ID="dgvVehicles" runat="server" Width="600px"></asp:GridView>
             <br />
             <asp:Label ID="lblVehicleID" runat="server" Text="Vehicle ID:"></asp:Label>

@@ -19,10 +19,10 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("Model", "ClientID", "Client", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Homework9Final.Client), "Client_Vehicle_Line", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Homework9Final.Client_Vehicle_Line), true)]
-[assembly: EdmRelationshipAttribute("Model", "ClientType_ID", "ClientType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Homework9Final.ClientType), "Client", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Homework9Final.Client), true)]
-[assembly: EdmRelationshipAttribute("Model", "VehicleID", "Vehicle", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Homework9Final.Vehicle), "Client_Vehicle_Line", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Homework9Final.Client_Vehicle_Line), true)]
-[assembly: EdmRelationshipAttribute("Model", "VehicleType_ID", "VehicleType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Homework9Final.VehicleType), "Vehicle", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Homework9Final.Vehicle), true)]
+[assembly: EdmRelationshipAttribute("Model", "FK_ClientID", "Clients", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Homework9Final.Client), "Client_Vehicle_Line", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Homework9Final.Client_Vehicle_Line), true)]
+[assembly: EdmRelationshipAttribute("Model", "FK_VehicleID", "Vehicles", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Homework9Final.Vehicle), "Client_Vehicle_Line", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Homework9Final.Client_Vehicle_Line), true)]
+[assembly: EdmRelationshipAttribute("Model", "FK_ClientType_ID", "ClientTypes", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Homework9Final.ClientType), "Clients", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Homework9Final.Client), true)]
+[assembly: EdmRelationshipAttribute("Model", "FK_VehicleType_ID", "VehicleTypes", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Homework9Final.VehicleType), "Vehicles", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Homework9Final.Vehicle), true)]
 
 #endregion
 
@@ -77,22 +77,6 @@ namespace Homework9Final
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Client> Clients
-        {
-            get
-            {
-                if ((_Clients == null))
-                {
-                    _Clients = base.CreateObjectSet<Client>("Clients");
-                }
-                return _Clients;
-            }
-        }
-        private ObjectSet<Client> _Clients;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Client_Vehicle_Line> Client_Vehicle_Line
         {
             get
@@ -105,6 +89,22 @@ namespace Homework9Final
             }
         }
         private ObjectSet<Client_Vehicle_Line> _Client_Vehicle_Line;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Client> Clients
+        {
+            get
+            {
+                if ((_Clients == null))
+                {
+                    _Clients = base.CreateObjectSet<Client>("Clients");
+                }
+                return _Clients;
+            }
+        }
+        private ObjectSet<Client> _Clients;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -175,19 +175,19 @@ namespace Homework9Final
         #region AddTo Methods
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Clients EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToClients(Client client)
-        {
-            base.AddObject("Clients", client);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the Client_Vehicle_Line EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToClient_Vehicle_Line(Client_Vehicle_Line client_Vehicle_Line)
         {
             base.AddObject("Client_Vehicle_Line", client_Vehicle_Line);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Clients EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToClients(Client client)
+        {
+            base.AddObject("Clients", client);
         }
     
         /// <summary>
@@ -388,18 +388,18 @@ namespace Homework9Final
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "ClientID", "Client_Vehicle_Line")]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_ClientID", "Client_Vehicle_Line")]
         public EntityCollection<Client_Vehicle_Line> Client_Vehicle_Line
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Client_Vehicle_Line>("Model.ClientID", "Client_Vehicle_Line");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Client_Vehicle_Line>("Model.FK_ClientID", "Client_Vehicle_Line");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Client_Vehicle_Line>("Model.ClientID", "Client_Vehicle_Line", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Client_Vehicle_Line>("Model.FK_ClientID", "Client_Vehicle_Line", value);
                 }
             }
         }
@@ -410,16 +410,16 @@ namespace Homework9Final
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "ClientType_ID", "ClientType")]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_ClientType_ID", "ClientTypes")]
         public ClientType ClientType
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ClientType>("Model.ClientType_ID", "ClientType").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ClientType>("Model.FK_ClientType_ID", "ClientTypes").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ClientType>("Model.ClientType_ID", "ClientType").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ClientType>("Model.FK_ClientType_ID", "ClientTypes").Value = value;
             }
         }
         /// <summary>
@@ -431,13 +431,13 @@ namespace Homework9Final
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ClientType>("Model.ClientType_ID", "ClientType");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ClientType>("Model.FK_ClientType_ID", "ClientTypes");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ClientType>("Model.ClientType_ID", "ClientType", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ClientType>("Model.FK_ClientType_ID", "ClientTypes", value);
                 }
             }
         }
@@ -582,16 +582,16 @@ namespace Homework9Final
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "ClientID", "Client")]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_ClientID", "Clients")]
         public Client Client
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Client>("Model.ClientID", "Client").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Client>("Model.FK_ClientID", "Clients").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Client>("Model.ClientID", "Client").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Client>("Model.FK_ClientID", "Clients").Value = value;
             }
         }
         /// <summary>
@@ -603,13 +603,13 @@ namespace Homework9Final
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Client>("Model.ClientID", "Client");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Client>("Model.FK_ClientID", "Clients");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Client>("Model.ClientID", "Client", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Client>("Model.FK_ClientID", "Clients", value);
                 }
             }
         }
@@ -620,16 +620,16 @@ namespace Homework9Final
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "VehicleID", "Vehicle")]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_VehicleID", "Vehicles")]
         public Vehicle Vehicle
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Vehicle>("Model.VehicleID", "Vehicle").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Vehicle>("Model.FK_VehicleID", "Vehicles").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Vehicle>("Model.VehicleID", "Vehicle").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Vehicle>("Model.FK_VehicleID", "Vehicles").Value = value;
             }
         }
         /// <summary>
@@ -641,13 +641,13 @@ namespace Homework9Final
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Vehicle>("Model.VehicleID", "Vehicle");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Vehicle>("Model.FK_VehicleID", "Vehicles");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Vehicle>("Model.VehicleID", "Vehicle", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Vehicle>("Model.FK_VehicleID", "Vehicles", value);
                 }
             }
         }
@@ -766,18 +766,18 @@ namespace Homework9Final
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "ClientType_ID", "Client")]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_ClientType_ID", "Clients")]
         public EntityCollection<Client> Clients
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Client>("Model.ClientType_ID", "Client");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Client>("Model.FK_ClientType_ID", "Clients");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Client>("Model.ClientType_ID", "Client", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Client>("Model.FK_ClientType_ID", "Clients", value);
                 }
             }
         }
@@ -1078,18 +1078,18 @@ namespace Homework9Final
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "VehicleID", "Client_Vehicle_Line")]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_VehicleID", "Client_Vehicle_Line")]
         public EntityCollection<Client_Vehicle_Line> Client_Vehicle_Line
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Client_Vehicle_Line>("Model.VehicleID", "Client_Vehicle_Line");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Client_Vehicle_Line>("Model.FK_VehicleID", "Client_Vehicle_Line");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Client_Vehicle_Line>("Model.VehicleID", "Client_Vehicle_Line", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Client_Vehicle_Line>("Model.FK_VehicleID", "Client_Vehicle_Line", value);
                 }
             }
         }
@@ -1100,16 +1100,16 @@ namespace Homework9Final
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "VehicleType_ID", "VehicleType")]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_VehicleType_ID", "VehicleTypes")]
         public VehicleType VehicleType
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<VehicleType>("Model.VehicleType_ID", "VehicleType").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<VehicleType>("Model.FK_VehicleType_ID", "VehicleTypes").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<VehicleType>("Model.VehicleType_ID", "VehicleType").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<VehicleType>("Model.FK_VehicleType_ID", "VehicleTypes").Value = value;
             }
         }
         /// <summary>
@@ -1121,13 +1121,13 @@ namespace Homework9Final
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<VehicleType>("Model.VehicleType_ID", "VehicleType");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<VehicleType>("Model.FK_VehicleType_ID", "VehicleTypes");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<VehicleType>("Model.VehicleType_ID", "VehicleType", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<VehicleType>("Model.FK_VehicleType_ID", "VehicleTypes", value);
                 }
             }
         }
@@ -1246,18 +1246,18 @@ namespace Homework9Final
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "VehicleType_ID", "Vehicle")]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_VehicleType_ID", "Vehicles")]
         public EntityCollection<Vehicle> Vehicles
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Vehicle>("Model.VehicleType_ID", "Vehicle");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Vehicle>("Model.FK_VehicleType_ID", "Vehicles");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Vehicle>("Model.VehicleType_ID", "Vehicle", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Vehicle>("Model.FK_VehicleType_ID", "Vehicles", value);
                 }
             }
         }

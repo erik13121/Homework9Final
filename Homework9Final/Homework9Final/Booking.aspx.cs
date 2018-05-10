@@ -52,42 +52,6 @@ namespace Homework9Final
             }
         }
 
-        public void FillClientsTable()
-        {
-            foreach (var item in myCollection.Clients)
-            {
-                if (!IsPostBack)
-                {
-                    dbxClientIDs.Items.Add(item.ClientID.ToString());
-                    dbxClientIDforQuery.Items.Add(item.ClientID.ToString());
-                }
-            }
-
-            dgvClients.DataSource = myCollection.Clients;
-            dgvClients.DataBind();
-        }
-
-        public void FillVehiclesTable()
-        {
-            foreach (var item in myCollection.Vehicles)
-            {
-                if(!IsPostBack)
-                {
-                    dbxVehicleIDs.Items.Add(item.VehicleID.ToString());
-                    dbxVehicleIDsforClients.Items.Add(item.VehicleID.ToString());
-                }
-            }
-
-            dgvVehicles.DataSource = myCollection.Vehicles;
-            dgvVehicles.DataBind();
-        }
-
-        public void FillBookingsTable()
-        {
-            dgvBookings.DataSource = myCollection.Client_Vehicle_Line;
-            dgvBookings.DataBind();
-        }
-
         protected void btnCancelBooking_Click(object sender, EventArgs e)
         {
             dbxClientIDs.Enabled = true;
@@ -141,6 +105,42 @@ namespace Homework9Final
 
             dgvVehicleTypesviaClient.DataSource = getVehicleTypeNames;
             dgvVehicleTypesviaClient.DataBind();
+        }
+
+        public void FillClientsTable()
+        {
+            foreach (var item in myCollection.Clients)
+            {
+                if (!IsPostBack)
+                {
+                    dbxClientIDs.Items.Add(item.ClientID.ToString());
+                    dbxClientIDforQuery.Items.Add(item.ClientID.ToString());
+                }
+            }
+
+            dgvClients.DataSource = myCollection.Clients;
+            dgvClients.DataBind();
+        }
+
+        public void FillVehiclesTable()
+        {
+            foreach (var item in myCollection.Vehicles)
+            {
+                if (!IsPostBack)
+                {
+                    dbxVehicleIDs.Items.Add(item.VehicleID.ToString());
+                    dbxVehicleIDsforClients.Items.Add(item.VehicleID.ToString());
+                }
+            }
+
+            dgvVehicles.DataSource = myCollection.Vehicles;
+            dgvVehicles.DataBind();
+        }
+
+        public void FillBookingsTable()
+        {
+            dgvBookings.DataSource = myCollection.Client_Vehicle_Line;
+            dgvBookings.DataBind();
         }
     }
 }
